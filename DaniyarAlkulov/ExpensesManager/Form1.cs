@@ -56,7 +56,7 @@ namespace ExpensesManager
             public string name;
             public List<string>? date;
             public decimal total;
-            public int times;
+            public int count;
 
             public Category(string name)
             {
@@ -120,7 +120,7 @@ namespace ExpensesManager
                             item.date.Add(dateForModel);
                         }
                         
-                        item.times += 1;
+                        item.count += 1;
                     }
 
                 }
@@ -131,7 +131,7 @@ namespace ExpensesManager
                 $"Total dates of payment: {dates.Count}{Environment.NewLine}";
             foreach (var item in list)
             {
-                resultBox.Text += $"{item.name} - bought {item.times} time(-s) in total. Purchases in: {string.Join(", ", item.date)}. Total expense: {item.total}{Environment.NewLine} ";
+                resultBox.Text += $"{item.name} - bought {item.count} {(item.count>1?"times":"time")} in total. Purchases in: {string.Join(", ", item.date)}. Total expense: {item.total}{Environment.NewLine} ";
             }
         }
         
