@@ -51,7 +51,22 @@ namespace ExpensesManager
             }
             
         }
+        public class Category
+        {
+            public string name;
+            public List<string>? date;
+            public decimal total;
+            public int times;
 
+            public Category(string name)
+            {
+                this.name = name;
+                this.date = new List<string>();
+                this.total = 0;
+            }
+        }
+
+        
         private void statsButton_Click(object sender, EventArgs e)
         {
             resultBox.Text = "";
@@ -62,16 +77,29 @@ namespace ExpensesManager
             decimal amount = 0;
 
             var dates = new Dictionary<DateTime, int>();
-            
             var categories = new Dictionary<string, int>();
-            
+            var list = new List<Category>();
             for (int i = 1; i < content.Length; i++)
             {
                 var line = content[i];
                 var split = line.Split("|");
                 var date = DateTime.Parse(split[0], culture);
-                amount += decimal.Parse(split[1], culture);
+                var dateForModel = DateTime.Parse(split[0], culture).ToString("MMMM");
+                var price = decimal.Parse(split[1], culture);
+                amount += price;
                 var category = split[2];
+
+                list.Add(new Category(category));
+                foreach (Category item in list)
+                {
+                    if (item.name == category)
+                    {
+                        item.total += price;
+                        item.date.Add(dateForModel);
+                        item.times += 1;
+                    }
+                }
+
 
                 if (dates.ContainsKey(date))
                 {
@@ -91,11 +119,16 @@ namespace ExpensesManager
                     categories[category] = 1;
                 }
 
+                
+
             }
             resultBox.Text += $"Total expences: {amount}{Environment.NewLine}" +
                 $"Number of categories: {categories.Count}{Environment.NewLine}" +
                 $"Total dates of payment: {dates.Count}{Environment.NewLine}";
-
+            foreach (var item in list)
+            {
+                resultBox.Text += $"{item.name} - bought {item.times} time(-s) in total. Purchases in: {string.Join(", ", item.date)}. Total expense: {item.total}{Environment.NewLine} ";
+            }
         }
         
 
