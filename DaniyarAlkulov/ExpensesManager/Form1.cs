@@ -89,17 +89,7 @@ namespace ExpensesManager
                 amount += price;
                 var category = split[2];
 
-                list.Add(new Category(category));
-                foreach (Category item in list)
-                {
-                    if (item.name == category)
-                    {
-                        item.total += price;
-                        item.date.Add(dateForModel);
-                        item.times += 1;
-                    }
-                }
-
+                //list.Add(new Category(category));
 
                 if (dates.ContainsKey(date))
                 {
@@ -117,9 +107,23 @@ namespace ExpensesManager
                 else
                 {
                     categories[category] = 1;
+                    list.Add(new Category(category));
                 }
 
-                
+                foreach (Category item in list)
+                {
+                    if (item.name == category)
+                    {
+                        item.total += price;
+                        if (!item.date.Contains(dateForModel))
+                        {
+                            item.date.Add(dateForModel);
+                        }
+                        
+                        item.times += 1;
+                    }
+
+                }
 
             }
             resultBox.Text += $"Total expences: {amount}{Environment.NewLine}" +

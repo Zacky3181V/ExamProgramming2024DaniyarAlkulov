@@ -10,7 +10,7 @@ namespace Geometry
     {
         Red, Green, Blue
     }
-    internal class ColourfulPoint : Point
+    public class ColourfulPoint : Point
     {
         public PointColour Colour { get; }
 

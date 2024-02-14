@@ -2,8 +2,8 @@
 {
     public class Point: IReflectable
     {
-        public double _x; 
-        public double _y;
+        private double _x; 
+        private double _y;
 
         public double X() => _x;
         public double Y() => _y;
